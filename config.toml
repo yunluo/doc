@@ -1,6 +1,8 @@
 baseURL = 'https://doc.gitcafe.ink'
 title = "云落的技术文档"
 theme = "hugo-geekdoc"
+languageCode = 'zh-cn'
+defaultContentLanguage = "zh"
 
 # Required to get well formatted code blocks
 pygmentsUseClasses = true

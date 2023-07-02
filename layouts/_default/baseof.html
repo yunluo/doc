@@ -1,106 +1,43 @@
-{{- $redirectURL := "" }}
-{{ with .Params.redirect}}
-  {{ if or (hasPrefix . "http:") (hasPrefix . "https:") }}
-    {{ $redirectURL = . }}
-  {{ else }}
-    {{ $redirectURL = ref $ .}}
-  {{ end }}
-{{ end }}
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{{ block "title" . }}{{ end }}</title>
-    {{ partial "html-head.html" . }}
-    {{if ne $redirectURL "" }}
-      <meta http-equiv="refresh" content="0;{{ $redirectURL }}">
-    {{end}}
-  </head>
+    {{- partial "head.html" . -}}
+    <body>
 
-  <body data-url="{{ .RelPermalink }}"
+        {{- partial "header.html" . -}}
 
-  class="
-  {{- with .Params.render}}render_{{.}} {{end -}}
-  {{if (in .Params.hide "header")}}hideheader {{end -}}
-  {{if (in .Params.hide "nav")}}hidenav {{end -}}
-  {{if (in .Params.hide "breadcrumb")}}hidebreadcrumb {{end -}}
-  {{if (in .Params.hide "toc")}}hidetoc {{end -}}
-  {{if (in .Params.hide "footer")}}hidefooter {{end -}}
-  {{if (in .Params.hide "nextpage")}}hidenextpage {{end -}}
-  ">
+        <div class="container-fluid">
+            <div class="row">
 
-<style type="text/css">
-  #debug{
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    line-height: 3.5rem;
-    margin-bottom: .35rem;
-    padding: 0 2rem;
-    position: fixed;
-    left: 0;      right: 0;     top: 0;
-   
-    top:0px;
-    
-    min-height: 150px;
+                <div class="docs-sidenav order-0 col-12 col-md-3 col-lg-2 col-xl-2 position-sticky border-right">
+                    {{- partial "menu.html" . -}}
+                </div>
 
-    background-color: white;
-    border: 3px solid red;
-    z-index: 10000 ;
-    word-wrap: all;
-    overflow: auto;
-  }
-</style>
- <!-- 
- <pre id="debug">
-  {{ printf "%#v" .Params.hide }}
-  {{ printf "%#v" (in .Params.hide "breadcrumb") }}
-</pre> 
-  -->
+                {{- if and (ne .Site.Params.toc false) (ne .Params.toc false) }}
+                <div class="docs-toc large order-lg-2 order-md-0 order-xs-1 col-12 col-lg-2 col-xl-2 position-sticky border-left">
+                    {{- partial "tableofcontents.html" . -}}
+                </div>
+                <div class="main col-12 order-1 col-md-9 col-lg-10 col-xl-8 py-3">
+                {{else}}
+                <div class="main col-12 order-1 col-md-9 col-lg-10 col-xl-10 py-3">
+                {{end}}
 
-{{ if ne $redirectURL ""}}
-    <script type="text/javascript">
-      window.location = '{{ $redirectURL }}'
-    </script>
-    <a href="{{ $redirectURL }}">go to {{ $redirectURL }}</a>
-{{ else if eq .Params.render "raw" }}
-      {{- .Content -}}
-{{ else }}
-    
-    {{if not (in .Params.hide "header")}}
-    <header style="">
-        {{ partial "body-header.html" . }}
-    </header>
-    {{end}}
+                    {{- block "main" . }}{{- end }}
+                    
+                    <div class="row">
+                        {{- if and (ne .Site.Params.disableReadmoreNav true) (ne .Params.disableReadmoreNav true) -}}
+                        <div class="position-relative mx-auto col-lg-9">
+                          {{ partial "next-prev-page.html" . }}
+                        </div>
+                        {{- end -}}
+                    </div> <!-- /end of row -->
 
-    <article>
-      {{if not (in .Params.hide "nav")}}
-      <aside class="{{.Params.layout }}">
-        {{ partial "body-sidebar.html" . }}
-      </aside>
-      {{end}}
+                </div>
 
-      <section class="page {{.Params.layout }}">
-      {{ block "main" . }}
-      {{ end }}
-      </section>
+            </div> <!-- /end of row -->
 
-      <!-- NAVIGATION DROITE TOC -->
-      {{if not (in .Params.hide "toc")}}
-      <section class="right-menu {{.Params.layout }}">
-      {{ block "sidepage" . }}
-      {{ end }}
-      </section>
-      {{end -}}
-      <!-- FIN NAVIGATION DROITE TOC -->
-    </article>
-    
-    {{if not (in .Params.hide "footer")}}
-    <footer>
-      {{ partial "body-footer.html" . }}
-    </footer>
-    {{end}}
+        </div> <!-- /end of container -->
 
-{{end}}
+        {{- partial "footer.html" . -}}
 
-  </body>
+    </body>
 </html>

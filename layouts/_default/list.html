@@ -1,20 +1,18 @@
 {{ define "main" }}
-{{if .Content}}
+
+{{ partial "title" . }}
+
 {{ .Content }}
-{{else }}
-{{ $paginator := .Paginator }}
 
-<div class="extra-pagination inner">
-{{ partial "_pagination.html" $paginator }}
-</div>
+    {{ if .IsTranslated }}
+        <h4>{{ i18n "translations" }}</h4>
+        <ul>
+            {{ range .Translations }}
+                <li>
+                    <a href="{{ .RelPermalink }}">{{ .Lang }}: {{ .Title }}</a>
+                </li>
+            {{ end }}
+          </ul>
+    {{ end }}
 
-{{ range $index, $page := $paginator.Pages }}
-   {{ .Render "li" }}
 {{ end }}
-
-<div style="margin-bottom:2rem"></div>
-
-{{ partial "_pagination.html" $paginator }}
-
-{{end}}
-{{end}}

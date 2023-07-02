@@ -1,18 +1,14 @@
-{{ $_hugo_config := `{ "version": 1 }` }}
+{{ $style := .Get "style"}}
 
-
-<div class="card ">
-  {{- with .Get "header" -}}
-  <div class="card-header {{with $.Get "theme" }}{{.}}{{else}}primary{{end}}">
-    {{- htmlUnescape . | markdownify -}}
-  </div>
-  {{- end -}}
-  <div class="card-body">
-    <p class="card-text">{{- .Inner -}}</p>
-  </div>
-  {{- with .Get "footer" -}}
-  <div class="card-footer text-muted">
-    {{- htmlUnescape . | markdownify -}}
-  </div>
-  {{- end -}}
+<div class="card my-3 border-top-0 border-right-0 border-bottom-0 border-left border-{{ $style }} rounded" style="border-width:4px !important;">
+    <div class="wrap border border-left-0 rounded">
+        {{ with .Get "title" }}
+        <div class="card-header border-0 bg-white pl-3 text-{{ $style }}">
+            <h3>{{.}}</h3>
+        </div>
+        {{ end }}
+        <div class="card-body pt-1">
+            {{ print .Inner | markdownify }}
+        </div>
+    </div>
 </div>

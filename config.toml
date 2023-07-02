@@ -1,72 +1,118 @@
+baseURL = 'https://doc.gitcafe.ink'
 title = "云落的技术文档"
+theme = "hugo-geekdoc"
 
-theme = "ace-documentation"
-
-baseURL = 'https://doc.gitcafe.ink/'
-
-languageCode = 'zh-CN'
-defaultContentLanguage = "zh"
+# Required to get well formatted code blocks
+pygmentsUseClasses = true
 pygmentsCodeFences = true
-pygmentsStyle = "monokai"
+disablePathToLower = true
+enableGitInfo = true
 
-defaultContentLanguageInSubdir= false
-enableMissingTranslationPlaceholders = false
-uglyurls = true
+# Required if you want to render robots.txt template
+enableRobotsTXT = true
 
+[markup]
+  [markup.goldmark.renderer]
+    # Needed for mermaid shortcode
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 9
 
-disableKinds = ["taxonomy", "taxonomyTerm", "category", "RSS"]
+[taxonomies]
+  tag = "tags"
 
-# Keep this as is
-[outputs]
-	home = [ "HTML", "RSS", "JSON"]
-
-# Site params
 [params]
-	ordersectionsby = "weight" # ordersectionsby = "title"
-	color_main = "#737373"
-	color_second = "#b30000"
-	disableSearch = false # default is false
-	disableNavChevron = false # set true to hide next/prev chevron, default is false
-	menushortcutsnewtab = false # set true to open shortcuts links to a new tab/window
+  # (Optional, default 6) Set how many table of contents levels to be showed on page.
+  # Use false to hide ToC, note that 0 will default to 6 (https://gohugo.io/functions/default/)
+  # You can also specify this parameter per page in front matter.
+  geekdocToC = 3
 
-[markup.goldmark.renderer]
-	unsafe = true
+  # (Optional, default static/brand.svg) Set the path to a logo for the Geekdoc
+  # relative to your 'static/' folder.
+  geekdocLogo = "logo.png"
 
-# 代码高亮配置
-[markup.highlight]
-	anchorLineNos = true
-	codeFences = true
-	guessSyntax = true
-	hl_Lines = ""
-	hl_inline = false
-	lineNoStart = 1
-	lineNos = true
-	lineNumbersInTable = false
-	noClasses = true
-	style = "monokai"
-	tabWidth = 2
+  # (Optional, default false) Render menu from data file in 'data/menu/main.yaml'.
+  # See also https://geekdocs.de/usage/menus/#bundle-menu.
+  geekdocMenuBundle = true
 
-#
-# top menu shotcuts
-#
-[[menu.shortcuts]]
-name = "Github"
-identifier = "ds"
-url = "https://github.com/vjeantet/hugo-theme-docport"
-weight = 10
+  # (Optional, default false) Collapse all menu entries, can not be overwritten
+  # per page if enabled. Can be enabled per page via 'geekdocCollapseSection'.
+  geekdocCollapseAllSections = true
 
-[[menu.shortcuts]]
-name = "Download"
-url = "https://github.com/vjeantet/hugo-theme-docport/archive/master.zip"
-weight = 11
+  # (Optional, default true) Show page navigation links at the bottom of each
+  # docs page (bundle menu only).
+  geekdocNextPrev = false
 
-[[menu.shortcuts]]
-name = "Hugo Documentation"
-identifier = "hugodoc"
-url = "https://gohugo.io/"
-weight = 20
+  # (Optional, default true) Show a breadcrumb navigation bar at the top of each docs page.
+  # You can also specify this parameter per page in front matter.
+  geekdocBreadcrumb = false
 
-[[menu.shortcuts]]
-name = "关于"
-url = "/docport-theme/credits/"
-weight = 30
+  # (Optional, default none) Set source repository location. Used for 'Edit page' links.
+  # You can also specify this parameter per page in front matter.
+  geekdocRepo = "https://github.com/thegeeklab/hugo"
+
+  # (Optional, default none) Enable 'Edit page' links. Requires 'geekdocRepo' param
+  # and the path must point to the parent directory of the 'content' folder.
+  # You can also specify this parameter per page in front matter.
+  geekdocEditPath = "edit/main/exampleSite"
+
+  # (Optional, default true) Enables search function with flexsearch.
+  # Index is built on the fly and might slow down your website.
+  geekdocSearch = false
+
+  # (Optional, default false) Display search results with the parent folder as prefix. This
+  # option allows you to distinguish between files with the same name in different folders.
+  # NOTE: This parameter only applies when 'geekdocSearch = true'.
+  geekdocSearchShowParent = true
+
+  # (Optional, default none) Add a link to your Legal Notice page to the site footer.
+  # It can be either a remote url or a local file path relative to your content directory.
+  geekdocLegalNotice = "https://blog.example.com/legal"
+
+  # (Optional, default none) Add a link to your Privacy Policy page to the site footer.
+  # It can be either a remote url or a local file path relative to your content directory.
+  geekdocPrivacyPolicy = "/privacy"
+
+  # (Optional, default true) Add an anchor link to headlines.
+  geekdocAnchor = true
+
+  # (Optional, default true) Copy anchor url to clipboard on click.
+  geekdocAnchorCopy = true
+
+  # (Optional, default true) Enable or disable image lazy loading for images rendered
+  # by the 'img' shortcode.
+  geekdocImageLazyLoading = true
+
+  # (Optional, default false) Set HTMl <base> to .Site.BaseURL if enabled. It might be required
+  # if a subdirectory is used within Hugos BaseURL.
+  # See https://developer.mozilla.org/de/docs/Web/HTML/Element/base.
+  geekdocOverwriteHTMLBase = false
+
+  # (Optional, default true) Enable or disable the JavaScript based color theme toggle switch. The CSS based
+  # user preference mode still works.
+  geekdocDarkModeToggle = false
+
+  # (Optional, default false) Auto-decrease brightness of images and add a slightly grayscale to avoid
+  # bright spots while using the dark mode.
+  geekdocDarkModeDim = false
+
+  # (Optional, default false) Enforce code blocks to always use the dark color theme.
+  geekdocDarkModeCode = false
+
+  # (Optional, default true) Display a "Back to top" link in the site footer.
+  geekdocBackToTop = true
+
+  # (Optional, default false) Enable or disable adding tags for post pages automatically to the navigation sidebar.
+  geekdocTagsToMenu = true
+
+  # (Optional, default 'title') Configure how to sort file-tree menu entries. Possible options are 'title', 'linktitle',
+  # 'date', 'publishdate', 'expirydate' or 'lastmod'. Every option can be used with a reverse modifier as well
+  # e.g. 'title_reverse'.
+  geekdocFileTreeSortBy = "title"
+
+  # (Optional, default none) Adds a "Content licensed under <license>" line to the footer.
+  # Could be used if you want to define a default license for your content.
+  [params.geekdocContentLicense]
+    name = "CC BY-SA 4.0"
+    link = "https://creativecommons.org/licenses/by-sa/4.0/"

@@ -1,18 +1,11 @@
 {{ define "main" }}
+  {{ partial "page-header" . }}
 
-{{ partial "title" . }}
 
-{{ .Content }}
-
-    {{ if .IsTranslated }}
-        <h4>{{ i18n "translations" }}</h4>
-        <ul>
-            {{ range .Translations }}
-                <li>
-                    <a href="{{ .RelPermalink }}">{{ .Lang }}: {{ .Title }}</a>
-                </li>
-            {{ end }}
-          </ul>
-    {{ end }}
-
+  <article
+    class="gdoc-markdown gdoc-markdown__align--{{ default "left" (.Page.Params.geekdocAlign | lower) }}"
+  >
+    <h1>{{ partial "utils/title" . }}</h1>
+    {{ partial "utils/content" . }}
+  </article>
 {{ end }}
